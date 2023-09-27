@@ -1,31 +1,29 @@
-# Il2CppDumper
+# ExaltDumper
 
-[![Build status](https://ci.appveyor.com/api/projects/status/anhqw33vcpmp8ofa?svg=true)](https://ci.appveyor.com/project/Perfare/il2cppdumper/branch/master/artifacts)
-
-中文说明请戳[这里](README.zh-CN.md)
-
-Unity il2cpp reverse engineer
+### Built on top of Il2CppDumper
+---
+Unity Il2Cpp automatic reverse engineering and dumping tool, specifically tailored for the game Realm of the Mad God.
 
 ## Features
 
-* Complete DLL restore (except code), can be used to extract `MonoBehaviour` and `MonoScript`
+* Complete DLL restore (except code) - can be used to extract `MonoBehaviour` and `MonoScript`
 * Supports ELF, ELF64, Mach-O, PE, NSO and WASM format
 * Supports Unity 5.3 - 2022.2
-* Supports generate IDA, Ghidra and Binary Ninja scripts to help them better analyze il2cpp files
-* Supports generate structures header file
-* Supports Android memory dumped `libil2cpp.so` file to bypass protection
-* Support bypassing simple PE protection
+* Supports generating IDA, Ghidra and Binary Ninja scripts to help with analyzing Il2Cpp files
+* Supports generating structure header file
+* Supports bypassing some simple PE protection
+* Supports bypassing the custom protection in place for Realm of the Mad God (**work-in-progress**)
 
 ## Usage
 
-Run `Il2CppDumper.exe` and choose the il2cpp executable file and `global-metadata.dat` file, then enter the information as prompted
+Run `ExaltDumper.exe` and choose the game DLL file then the `global-metadata.dat` file, then wait for information to be dumped
 
 The program will then generate all the output files in current working directory
 
 ### Command-line
 
 ```
-Il2CppDumper.exe <executable-file> <global-metadata> <output-directory>
+ExaltDumper.exe <executable-file> <global-metadata> <output-directory>
 ```
 
 ### Outputs
@@ -60,7 +58,7 @@ For BinaryNinja
 
 #### ghidra_wasm.py
 
-For Ghidra, work with [ghidra-wasm-plugin](https://github.com/nneonneo/ghidra-wasm-plugin)
+For Ghidra, works with [ghidra-wasm-plugin](https://github.com/nneonneo/ghidra-wasm-plugin)
 
 #### script.json
 
@@ -68,7 +66,7 @@ For ida.py, ghidra.py and Il2CppBinaryNinja
 
 #### stringliteral.json
 
-Contains all stringLiteral information
+Contains all stringLiteral values and their addresses in the binary
 
 ### Configuration
 
@@ -101,22 +99,15 @@ Available options:
 
 #### `ERROR: Metadata file supplied is not valid metadata file.`  
 
-Make sure you choose the correct file. Sometimes games may obfuscate this file for content protection purposes and so on. Deobfuscating of such files is beyond the scope of this program, so please **DO NOT** file an issue regarding to deobfuscating.
-
-If your file is `libil2cpp.so` and you have a rooted Android phone, you can try my other project [Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper), it can bypass this protection.
+Make sure you choose the correct file. Sometimes games may obfuscate this file for content protection purposes and so on. 
+Deobfuscating of such files is beyond the scope of this program, so please **DO NOT** file an issue regarding to deobfuscating.
 
 #### `ERROR: Can't use auto mode to process file, try manual mode.`
 
-Please note that the executable file for the PC platform is `GameAssembly.dll` or `*Assembly.dll`
+Please note that the executable file for the PC is `GameAssembly.dll`
 
-You can open a new issue and upload the file, I will try to solve.
-
-#### `ERROR: This file may be protected.`
-
-Il2CppDumper detected that the executable file has been protected, use `GameGuardian` to dump `libil2cpp.so` from the game memory, then use Il2CppDumper to load and follow the prompts, can bypass most protections.
-
-If you have a rooted Android phone, you can try my other project [Zygisk-Il2CppDumper](https://github.com/Perfare/Zygisk-Il2CppDumper), it can bypass almost all protections.
+You can open a new issue and upload the results; I will try to solve it.
 
 ## Credits
 
-- Jumboperson - [Il2CppDumper](https://github.com/Jumboperson/Il2CppDumper)
+- Perfare - [Original Il2CppDumper](https://github.com/Perfare/Il2CppDumper)
